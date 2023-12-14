@@ -32,7 +32,7 @@ class _EditUserPageState extends State<EditUserPage> {
                 child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent,elevation: 0,foregroundColor: Colors.transparent),
                     onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>UserProfile()));
+                      Navigator.pop(context);
                     },
                     icon: Icon(Icons.arrow_back_ios_new, color: kGrey,),
                     label: Text('Back To Profile', style: kanumGothicRegular.copyWith(color: kGrey),)),

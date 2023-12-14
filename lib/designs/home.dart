@@ -111,7 +111,7 @@ void initState()  {
                                           colors: [
                                             Colors.transparent,
                                             Colors.transparent,
-                                            Colors.black.withOpacity(0.6),
+                                            kBlack.withOpacity(0.6),
                                           ],
                                         ),
                                       ),
