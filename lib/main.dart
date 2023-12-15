@@ -4,6 +4,7 @@ import 'package:sociachatv2/Functions/Authentication/widgetTree.dart';
 import 'package:sociachatv2/database/databaseConfig.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:sociachatv2/designs/resources/style.dart';
 
 import 'Functions/cameraFunction.dart';
 Future<void> main() async {
@@ -18,6 +19,14 @@ await Firebase.initializeApp();
 
     theme: ThemeData(
       fontFamily: GoogleFonts.nanumGothic().fontFamily,
+      textTheme: TextTheme(
+        bodyLarge: TextStyle(color: kWhite),
+        bodyMedium: TextStyle(color: kWhite),
+        bodySmall: TextStyle(color: kWhite),
+        displayLarge: TextStyle(color: kWhite),
+        displayMedium: TextStyle(color: kWhite),
+        displaySmall: TextStyle(color: kWhite),
+      )
     ),
   ));
   FlutterNativeSplash.remove();

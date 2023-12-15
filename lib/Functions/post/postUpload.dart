@@ -82,7 +82,7 @@ void initState() {
                     Text('Discard', style: kNanumGothicBold.copyWith(color: kBlue, fontSize: 14),),
                     Text('Create'.toUpperCase(), style: kNanumGothicBold.copyWith(color: kWhite, fontSize: 14),),
                     SizedBox(
-                      width: 70,
+                      width: 90,
                       height: 24,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(backgroundColor: kPink, shape: const StadiumBorder(),),
@@ -114,7 +114,7 @@ void initState() {
                           await PostConfig().uploadPost(descriptionController.text,selectedImages, videoPath);
                           Navigator.push(context, (MaterialPageRoute(builder: (context)=>CustomNavigationBar())));
                         },
-                        child: Text('Publish',style: kNanumGothicBold.copyWith(fontSize: 11),),
+                        child: Text('Publish',style: kNanumGothicBold.copyWith(fontSize: 11,color: kWhite),),
                       ),
                     ),
                   ],
@@ -324,7 +324,7 @@ void initState() {
                 padding: const EdgeInsets.only(bottom: 10.0),
                 child: Container(
                     padding: const EdgeInsets.all(5),
-                    width: 170,
+                    width: 190,
                     height: 35,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),

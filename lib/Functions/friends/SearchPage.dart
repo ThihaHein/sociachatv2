@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sociachatv2/Functions/friends/userProfile.dart';
 import 'package:sociachatv2/designs/resources/style.dart';
 import 'package:sociachatv2/models/search/searchConfig.dart';
 
@@ -110,10 +111,16 @@ class _SearchPageState extends State<SearchPage> {
                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                      children: [
                                        Text('$username', style: kNanumGothicBold.copyWith(color: kWhite),),
+                                       if(isFollowing)
+                                       ElevatedButton(
+                                           onPressed: (){
+                                             Navigator.push(context, MaterialPageRoute(builder: (context)=>UserProfile(userId: userId,)));
+                                           },
+                                           child: Text('View Profile')),
                                        ElevatedButton(
                                            onPressed: (){
                                             UserConfig().requestFollow(userId, user!.uid);
-                                             },style: ElevatedButton.styleFrom(backgroundColor: isUser || isFollowing ? Colors.transparent:kBlue,side: isUser || isFollowing?BorderSide(color: kDarkGrey):null), child: Text(isUser? 'My Account':isFollowing? 'Following': "Follow"))
+                                             },style: ElevatedButton.styleFrom(backgroundColor: isUser || isFollowing ? Colors.transparent:kBlue,side: isUser || isFollowing?BorderSide(color: kDarkGrey):null), child: Text(isUser? 'My Account':isFollowing? 'Following': "Follow", style: kanumGothicRegular.copyWith(color: kWhite),))
                                      ],
                                    ),
                                  )

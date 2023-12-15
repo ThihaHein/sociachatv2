@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/gradient_borders.dart';
+import 'package:sociachatv2/Functions/chat/chatHome.dart';
 import 'package:sociachatv2/Functions/post/postList.dart';
 import 'package:sociachatv2/database/auth.dart';
 import 'package:sociachatv2/designs/resources/style.dart';
+import 'package:sociachatv2/models/chat/chatConfig.dart';
 import 'package:sociachatv2/models/posts/postConfig.dart';
 import 'dart:ui' as ui;
 
@@ -49,9 +51,14 @@ void initState()  {
                   children: [
                     Text("Welcome, $username", style: kNanumGothicBold.copyWith(color: kWhite, fontSize: 16),),
                     GestureDetector(
-                      onTap: (){
-                        Auth().signOut();
-                        Auth().signOutFromGoogle();
+                      onTap: () async{
+                       String? chatId= await ChatConfig().checkChatExistForUser(user!.uid);
+                       if(chatId != ''){
+                         Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatHomePage()));
+                       }
+                       else{
+                          null;
+                       }
                       },
                       child: Container(
                         width: 33,

@@ -152,7 +152,7 @@ Future<void> createUserWithEmail()async{
                                }
                              },
                              style: ElevatedButton.styleFrom(backgroundColor:kPurple, shape: StadiumBorder(), fixedSize:Size( 180, 30)),
-                             child: Text(isLogin? 'Login': 'Register', style: kNanumGothicBold,)),
+                             child: Text(isLogin? 'Login': 'Register', style: kNanumGothicBold.copyWith(color: kWhite),)),
                          Padding(
                            padding: const EdgeInsets.all(10),
                            child: InkWell(

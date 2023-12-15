@@ -1,18 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
-import 'package:sociachatv2/Functions/userFunctions/userEdit.dart';
-import 'package:sociachatv2/Functions/userFunctions/userProfilePost.dart';
-import 'package:sociachatv2/database/auth.dart';
-import 'package:sociachatv2/models/posts/postConfig.dart';
+import 'package:sociachatv2/Functions/chat/chatPage.dart';
+import 'package:sociachatv2/models/chat/chatConfig.dart';
 
 import '../../designs/resources/style.dart';
 import '../../models/users/userConfig.dart';
+import '../userFunctions/userEdit.dart';
+import '../userFunctions/userProfilePost.dart';
 
 class UserProfile extends StatefulWidget {
-  const UserProfile({super.key});
+  final userId;
+  const UserProfile({super.key, this.userId});
 
   @override
   State<UserProfile> createState() => _UserProfileState();
@@ -20,24 +19,24 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
   User? user = FirebaseAuth.instance.currentUser;
- String username = '';
+  String username = '';
   List<String> followingUserList = [];
   List<String> followerUserList = [];
   String defaultPfp = "https://t4.ftcdn.net/jpg/03/49/49/79/360_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.webp";
   Future<void> fetchFollowingList() async{
-    List<String> followingIds = await UserConfig().getFollowingList(user!.uid);
+    List<String> followingIds = await UserConfig().getFollowingList(widget.userId);
     setState(() {
       followingUserList = followingIds;
     });
   }
   Future<void> fetchFollowerList() async{
-    List<String> followerIds = await UserConfig().getFollowerList(user!.uid);
+    List<String> followerIds = await UserConfig().getFollowerList(widget.userId);
     setState(() {
       followerUserList = followerIds;
     });
   }
   Future<void> getUsername() async {
-    String result = await UserConfig().getUserName(user!.uid);
+    String result = await UserConfig().getUserName(widget.userId);
     setState(() {
       username = result;
     });
@@ -151,30 +150,31 @@ class _UserProfileState extends State<UserProfile> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('${followerUserList.length}',style: kNanumGothicBold.copyWith(color: kWhite, fontSize: 14),),
-                              SizedBox(height: 5,),
-                              Text('Followers',style: kNanumGothicBold.copyWith(color: kDarkGrey, fontSize: 14),),
-                            ],
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('${followerUserList.length}',style: kNanumGothicBold.copyWith(color: kWhite, fontSize: 14),),
+                            SizedBox(height: 5,),
+                            Text('Followers',style: kNanumGothicBold.copyWith(color: kDarkGrey, fontSize: 14),),
+                          ],
+                        ),
 
                         Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('${followingUserList.length}',style: kNanumGothicBold.copyWith(color: kWhite, fontSize: 14),),
-                              SizedBox(height: 5,),
-                              Text('Following',style: kNanumGothicBold.copyWith(color: kDarkGrey, fontSize: 14),),
-                            ],
-                          ),
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('${followingUserList.length}',style: kNanumGothicBold.copyWith(color: kWhite, fontSize: 14),),
+                            SizedBox(height: 5,),
+                            Text('Following',style: kNanumGothicBold.copyWith(color: kDarkGrey, fontSize: 14),),
+                          ],
+                        ),
 
                         ElevatedButton(
-                        style: ElevatedButton.styleFrom(side: BorderSide(color: kGrey, width: 1.5,), backgroundColor: Colors.transparent, shape: StadiumBorder()),
-                          onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>EditUserPage()));
-                          },
-                          child: Text('Edit Profile')),
+                            style: ElevatedButton.styleFrom(side: BorderSide(color: kGrey, width: 1.5,), backgroundColor: Colors.transparent, shape: StadiumBorder()),
+                              onPressed: () async {
+                                List<String> userIds = [widget.userId, user!.uid];
+                                String? existingChatId = await ChatConfig().checkChatExist(userIds);
+              },
+                            child: Text('Send Message')),
                       ],
                     ),
                     Container(
